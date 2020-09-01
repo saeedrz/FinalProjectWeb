@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    <script type="text/javascript" src="./films.js"></script>
+    <title>Assignment 6</title>
+</head>
+<body>
+
+
+
+    <div class="alert" id="success-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span> 
+        <strong>Success!</strong> Your form is submitted successfully.
+    </div>
+    <div class="alert" id="successuser-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span> 
+        <strong>Success!</strong> User logged in.
+    </div>
+    <div class="redalert" id="emptytitle-alert">
+        <span class="fas fa-exclamation-circle"></span>
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span> 
+        <strong>FAILED!</strong> Your title is empty.
+    </div>
+
+    <div class="redalert" id="emptyrating-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span> 
+        <strong>FAILED!</strong> Your rating is empty.
+        
+    </div>
+
+    <div class="redalert" id="invalidrating-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span> 
+        <strong> FAILED!</strong> Your rating is invalid. Must be a number between 1-5.
+    </div>
+    <div class="redalert" id="invaliduser-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span> 
+        <strong> FAILED!</strong> Your username must be only letters and numbers.
+    </div>
+   
+
+    <div class="container">
+
+       
+        <!-- Input form for submitting film title -->
+    <form onsubmit="return createFilm(event)">
+         <label class='boxtitle' for="filmTitle">Enter a Film Title & Rating </label>
+         <input class='filminput' type="text" id="filmTitle" name="filmTitle" placeholder="Film Title..">
+         <input class ='filmrating' type="text" id="filmRating" name="filmRating" placeholder="Film Rating..">
+         <input type="submit" value="Submit">
+     </form>
+        
+        <!-- Get Film form for retreiving all the films -->
+        <form onsubmit="return getFilms(event)">
+            <input type="submit" value="Get Films">
+        </form>
+        <!-- Films table at fisrt display nothing -->
+        <div>
+            <table id="films">
+            </table>
+        </div>
+    </div>
+    <div class="contain2">
+        <label class='boxtitle' for="filmTitle">Login </label>
+        <form onsubmit="return loginUser(event)">
+            <input type ="text" class="usernameinput" id="usernameinput" name="usernameinput" placeholder="username" required>
+            <input type="submit" id="userbutton" value="submit">
+    </div>
+
+</body>
+</html>
