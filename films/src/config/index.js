@@ -1,5 +1,5 @@
 
-let DB_URI = "mongodb://192.168.1.6:27017/mydb";
+let DB_URI = "mongodb://192.168.1.100:27017/mydb";
 
 
 if (process.env.MONGO_DB_URI){

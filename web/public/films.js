@@ -10,7 +10,7 @@ function loginUser(event){
     var letterNumber = /^[0-9a-zA-Z]+$/;
     if(userName.match(letterNumber)){
         try {
-            fetch("http://192.168.1.6:8080/api/v1/login", {
+            fetch("http://192.168.1.100:8080/api/v1/login", {
                 method: 'POST',
                 body: JSON.stringify({
                     username: userName
@@ -25,7 +25,7 @@ function loginUser(event){
             .then(data => {
                 jwToken = data.token;
             });
-            document.getElementById('successuser-alert').style.display = 'block';
+    alert("Sucessful Login");
         } catch (e) {
             console.log(e)
             
@@ -33,18 +33,8 @@ function loginUser(event){
          }
    else
      { 
-        document.getElementById('invaliduser-alert').style.display = 'block';
+alert("Invalid Username");
     }
-    
-
-    setTimeout(() => { 
-        var elements = document.getElementsByClassName('redalert');
-        for(var i=0; i<elements.length; i++) {
-            elements[i].style.display='none';
-            document.getElementById('successuser-alert').style.display = 'none';
-        
-        }
-        }, 5000);
     return false;
     }
 
@@ -89,7 +79,7 @@ else{
     
         //All the requests send to API should be written in try catch block
     try{
-        fetch('http://192.168.1.6:8080/api/v1/films',{
+        fetch('http://192.168.1.100:8080/api/v1/films',{
             method: 'POST',
             body: JSON.stringify({
                 title: filmTitle,
@@ -144,7 +134,7 @@ function getFilms(event){
     event.preventDefault();
 
     try {
-        fetch('http://192.168.1.6:8080/api/v1/films', {
+        fetch('http://192.168.1.100:8080/api/v1/films', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -182,18 +172,13 @@ var x =5 ;
                             let td = document.createElement('td'); 
                             td = tr.insertCell(j);
                             if(j===0)
-                                td.innerHTML = i;
+                                td.innerHTML = i+1;
                             else if(j ===  1)
                                 td.innerHTML = result[i].title;
                             else if (j === 2)
                                 td.innerHTML = result[i].rating;
                            else
-                               // td.innerHTML +='<form onSubmit ="return newOne(\''+result[i]._id.toString()+'\',  \''+i.toString()+'\')"> \<input id="mynewrate" type="text" class="input-txt"><input id="mycolumn" type="Submit" class="input-btn" value="Go">';
-                              // td.innerHTML +='<form onSubmit ="return newOne(\''+result[i]._id.toString()+'\')"> \<input id="mycolumn" type="text" class="input-txt"><input id="mycolumn" type="Submit" class="input-btn" value="Go">';
-                                //ids[i] = result[i]._id;
-                                td.innerHTML += `<form onSubmit ="return newOne(event, '${result[i]._id.toString()}')"> \<input id="mynr${result[i]._id.toString()}" type="text" class="input-txt"> <input id="mycolumn" type="Submit" class="input-btn" value="Go">`;
-                           // document.getElementById('editButton').style.display = 'block';
-
+                                td.innerHTML += `<form onSubmit ="return updateFilm('${result[i]._id.toString()}')"> \<input id="mynr${result[i]._id.toString()}" type="text" class="input-txt"> <input id="mycolumn" type="Submit" class="input-btn" value="Go">`;
                         }
                 }
                     
@@ -206,26 +191,31 @@ var x =5 ;
 
 }
 
-function newOne(event, filsm) {
+function updateFilm(filsm) {
     event.preventDefault();
+  //  event.preventDefault();
     let nr = document.getElementById(`mynr${filsm.toString()}`).value;
 if (parseInt(nr, 10) < 1 || parseInt(nr, 10) > 5 ){
-    document.getElementById('invalidrating-alert').style.display = 'block';
+   // document.getElementById('invalidrating-alert').style.display = 'block';
+    alert("Invalid Rating, choose a number between 1 and 5");
 }
 else if (nr === '') {
 
-    document.getElementById('emptyrating-alert').style.display = 'block';
+   // document.getElementById('emptyrating-alert').style.display = 'block';
+   alert("Empty Rating");
+
 }
 else if (isNaN(nr)){
 
-    document.getElementById('invalidrating-alert').style.display = 'block';
+    //document.getElementById('invalidrating-alert').style.display = 'block';
+    alert("Invalid Rating");
 
 }
 
 else{
     
     try{
-        fetch(`http://192.168.1.6:8080/api/v1/films/${filsm.toString()}`,{
+        fetch(`http://192.168.1.100:8080/api/v1/films/${filsm.toString()}`,{
             method: 'PUT',
             body: JSON.stringify({
                 rating: nr
@@ -237,16 +227,26 @@ else{
         }).then(resp =>{
             setTimeout(function () {
                 if (resp.status == 200) {
-                    document.getElementById('success-alert').style.display = 'block';                }
+                    //document.getElementById('success-alert').style.display = 'block';              
+                    alert("Successfully Updated");
+                    
+                      }
                     else{
                     alert(resp.status + " " + resp.statusText);                }
             }, 0);
         });
-
+/*
         //Clear text field
         document.getElementById('filmTitle').value = '';
         document.getElementById('filmRating').value = '';
+setTimeout(() => { 
+        var elements2 = document.getElementsByClassName('redalert');
+        for(var i=0; i<elements2.length; i++) {
+            elements2[i].style.display='none';
+        document.getElementById('success-alert').style.display = 'none';
+        }
 
+        }, 5000);*/
         //show success message to user
      //   document.getElementById('success-alert').style.display = 'block';
     }catch(e){
@@ -255,7 +255,11 @@ else{
         console.log('---------------');
     }
 }
-    getFilms();
+setTimeout(() => {
+        return getFilms(event);
+
+}, 500);
+    
 }
 
 

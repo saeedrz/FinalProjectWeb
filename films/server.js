@@ -31,7 +31,7 @@ app.listen('3001', function() {
 
 /*const mongoose = require("mongoose");
 const Film = require("./Film.model");
-const connection = "mongodb://192.168.1.6:27017/mydbs";
+const connection = "mongodb://192.168.1.100:27017/mydbs";
 const connectDb = () => {
  return mongoose.connect(connection);
 };
